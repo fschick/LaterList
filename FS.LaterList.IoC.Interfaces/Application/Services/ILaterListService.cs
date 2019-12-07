@@ -8,6 +8,7 @@ namespace FS.LaterList.IoC.Interfaces.Application.Services
     {
         IEnumerable<TodoList> GetTodoLists();
         TodoList GetTodoList(Guid todoListId);
+        TodoItem UpdateTodoItem(TodoItem todoItem);
         List<TodoList> GenerateDemoTodoLists(string namePrefix = "Demo ", int listCount = 3, int maxListItemsCount = 5);
     }
 }

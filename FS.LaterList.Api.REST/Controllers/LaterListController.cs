@@ -24,6 +24,10 @@ namespace FS.LaterList.Api.REST.Controllers
         public TodoList GetList([Required, FromRoute]Guid todoListId)
             => _laterListService.GetTodoList(todoListId);
 
+        [HttpPut(Routes.LaterList.UpdateTodoItem)]
+        public TodoItem UpdateTodoItem([FromBody]TodoItem todoItem)
+            => _laterListService.UpdateTodoItem(todoItem);
+
         [HttpPost(Routes.LaterList.GenerateDemoTodoLists)]
         public List<TodoList> GenerateDemoTodoLists(string namePrefix = "Demo ", int listCount = 3, int maxListItemsCount = 5)
             => _laterListService.GenerateDemoTodoLists(namePrefix, listCount, maxListItemsCount);

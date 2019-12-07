@@ -23,5 +23,6 @@ namespace FS.LaterList.IoC.Interfaces.Repository.SQLite.Repositories
             where TEntity : class, IModel;
 
         List<TEntity> AddRange<TEntity>(List<TEntity> entities) where TEntity : class, IModel;
+        TEntity Update<TEntity>(TEntity entity) where TEntity : class, IModel;
     }
 }

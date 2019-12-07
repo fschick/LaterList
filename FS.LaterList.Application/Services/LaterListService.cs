@@ -28,6 +28,19 @@ namespace FS.LaterList.Application.Services
                     includes: new[] { nameof(TodoList.Items) }
                 );
 
+        public TodoItem UpdateTodoItem(TodoItem todoItem)
+        {
+            var origin = _laterListRepository.FirstOrDefault(
+                select: (TodoItem x) => x,
+                where: x => x.Id == todoItem.Id
+            );
+
+            origin.Title = todoItem.Title;
+            origin.Status = todoItem.Status;
+
+            return _laterListRepository.Update(origin);
+        }
+
         public List<TodoList> GenerateDemoTodoLists(string namePrefix = "Demo ", int listCount = 3, int maxListItemsCount = 5)
         {
             var todoLists = new List<TodoList>();

@@ -47,6 +47,17 @@ namespace FS.LaterList.Repository.SQLite.Repositories
             return result;
         }
 
+        public TEntity Update<TEntity>(TEntity entity) where TEntity : class, IModel
+        {
+            var now = DateTime.UtcNow;
+            UpdateModified(new[] { entity }, now);
+
+            var result = _dbContext.Update(entity).Entity;
+            _dbContext.SaveChanges();
+
+            return result;
+        }
+
         private IQueryable<TResult> GetInternal<TEntity, TResult>(Expression<Func<TEntity, TResult>> select, Expression<Func<TEntity, bool>> where, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, string[] includes) where TEntity : class, IModel
         {
             var query = _dbContext.Set<TEntity>().AsQueryable();
