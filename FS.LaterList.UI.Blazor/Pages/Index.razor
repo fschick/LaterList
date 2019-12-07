@@ -1,0 +1,30 @@
+﻿@page "/"
+@inherits IndexController
+
+<div class="d-flex align-items-center mb-3">
+    <h1 class="flex-grow-1">Later Lists</h1>
+    <button type="button"
+            class="btn btn-primary"
+            data-toggle="collapse"
+            data-target="#createTodoList"
+            aria-expanded="false"
+            aria-controls="createTodoList"
+            @onclick="InitializeNewTodoList">
+        <i class="material-icons align-bottom">playlist_add</i> Create List
+    </button>
+</div>
+
+<TodoListEdit id="createTodoList" TodoList="NewTodoList" OnSave="CreateTodoList" />
+
+<div class="list-group list-group-flush">
+    @foreach (var todoList in TodoLists)
+    {
+        <div class="list-group-item list-group-item-action pl-0 d-flex align-items-center">
+            <a href="@(NavigationManager.GetPageLink<LaterList>(todoList.Id))" class="text-body text-decoration-none flex-grow-1">@todoList.Title</a>
+            <label class="sr-only" for="removeTodoList">Remove todo list</label>
+            <button type="button" class="btn d-flex" id="removeTodoList" @onclick="@(() => RemoveTodoList(todoList))">
+                <i class="material-icons pointer text-secondary">delete</i>
+            </button>
+        </div>
+    }
+</div>

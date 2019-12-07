@@ -1,0 +1,12 @@
+﻿<Project>
+  <PropertyGroup>
+    <Authors>Florian Schick</Authors>
+    <Company>Schick Software Entwicklung</Company>
+    <Copyright>© Florian Schick 2019 all rights reserved</Copyright>
+    <PackageProjectUrl>https://github.com/fschick/LaterList</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/fschick/LaterList.git</RepositoryUrl>
+    <PackageTags>Blazor, WASM, Todo List</PackageTags>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+  </PropertyGroup>
+</Project>

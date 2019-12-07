@@ -1,0 +1,39 @@
+﻿@using FS.LaterList.Common.Enums
+@inherits TodoItemRowController
+
+<EditForm EditContext="@EditContext" class="todo-item-row">
+    <DataAnnotationsValidator />
+    <div class="form-row align-items-center">
+        <div class="col-auto">
+            <div class="btn-group" role="group" aria-label="Set todo to done or canceled">
+                <button type="button" class="btn d-flex px-0 pr-1" @onclick="@(() => SetTodoStatus(TodoItemStatus.Done))">
+                    <i id="todoDone-@RowId" class="material-icons @(TodoItem.IsDone ? "text-success font-weight-bold" : "text-muted")">done</i>
+                    <span class="sr-only">Set todo to done</span>
+                </button>
+                <button type="button" class="btn d-flex px-0" @onclick="@(() => SetTodoStatus(TodoItemStatus.Canceled))">
+                    <i id="todoCancel-@RowId" class="material-icons @(TodoItem.IsCanceled ? "text-danger font-weight-bold" : "text-muted")">close</i>
+                    <span class="sr-only">Set todo to canceled</span>
+                </button>
+            </div>
+        </div>
+        <div class="col">
+            <label class="sr-only" for="todoItemEditTitle-@RowId">Title</label>
+            <InputText type="text"
+                       class="@($"form-control-plaintext {(TodoItem.IsOpen ? null : "text-decoration-del")}")"
+                       id="@($"todoItemEditTitle-{RowId}")"
+                       Value="@TodoItem.Title"
+                       ValueExpression="@(() => TodoItem.Title)"
+                       ValueChanged="@(v => SetTodoTitle(v))" />
+
+        </div>
+        <div class="col-auto form-text help-block m-0">
+            <ValidationSummary />
+        </div>
+        <div class="col-auto">
+            <button type="button" class="btn d-flex" @onclick="Remove">
+                <i class="material-icons pointer text-secondary">delete</i>
+                <span class="sr-only">Remove todo item</span>
+            </button>
+        </div>
+    </div>
+</EditForm>

@@ -1,0 +1,20 @@
+﻿@inherits MainLayoutController
+<header class="container-fluid fixed-top px-0">
+    <NavMenu />
+</header>
+<main role="main" class="container pb-2" style="padding-top: 5rem;">
+    @Body
+</main>
+<footer class="footer d-flex flex-column bg-white">
+    <hr class="m-0" />
+    <div class="row mx-0 h-100 align-items-center">
+        <div class="col p-0 text-center">
+            <small class="text-muted">
+                @ProductName, Version&nbsp;@ProductVersion | @Copyright |
+                <NavLink class="text-muted" href="@(NavigationManager.GetPageLink<Imprint>())">Imprint</NavLink> |
+                <NavLink class="text-muted" href="@(NavigationManager.GetPageLink<PrivacyPolicy>())">Privacy&nbsp;Policy</NavLink> |
+                <a class="text-muted" href="https://github.com/fschick/LaterList" target="_blank">Source&nbsp;code&nbsp;on&nbsp;GitHub</a>
+            </small>
+        </div>
+    </div>
+</footer>
