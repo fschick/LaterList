@@ -24,8 +24,20 @@ namespace FS.LaterList.Api.REST.Controllers
         public TodoList GetList([Required, FromRoute]Guid todoListId)
             => _laterListService.GetTodoList(todoListId);
 
+        [HttpPost(Routes.LaterList.CreateTodoList)]
+        public TodoList CreateTodoList([Required, FromBody]TodoList todoList)
+            => _laterListService.CreateTodoList(todoList);
+
+        [HttpPut(Routes.LaterList.UpdateTodoList)]
+        public TodoList UpdateTodoList([Required, FromBody]TodoList todoList)
+            => _laterListService.UpdateTodoList(todoList);
+
+        [HttpPost(Routes.LaterList.CreateTodoItem + "/{todoListId:guid}")]
+        public TodoItem CreateTodoItem([Required, FromRoute]Guid todoListId, [Required, FromBody]TodoItem todoItem)
+            => _laterListService.CreateTodoItem(todoListId, todoItem);
+
         [HttpPut(Routes.LaterList.UpdateTodoItem)]
-        public TodoItem UpdateTodoItem([FromBody]TodoItem todoItem)
+        public TodoItem UpdateTodoItem([Required, FromBody]TodoItem todoItem)
             => _laterListService.UpdateTodoItem(todoItem);
 
         [HttpPost(Routes.LaterList.GenerateDemoTodoLists)]

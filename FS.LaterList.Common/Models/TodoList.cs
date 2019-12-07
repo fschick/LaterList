@@ -1,6 +1,7 @@
 ﻿using FS.LaterList.Common.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace FS.LaterList.Common.Models
 {
@@ -8,6 +9,8 @@ namespace FS.LaterList.Common.Models
     {
         public Guid Id { get; set; }
 
+        [Required]
+        [StringLength(100)]
         public string Title { get; set; }
 
         public bool IsPrivate { get; set; }

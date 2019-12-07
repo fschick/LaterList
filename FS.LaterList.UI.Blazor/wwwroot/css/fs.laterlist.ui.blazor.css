@@ -3,8 +3,28 @@
 /* -------------------------------------------------*/
 /* Common */
 /* -------------------------------------------------*/
+.pointer {
+    cursor: pointer;
+}
+
 .list-group {
     font-size: 0.9375rem;
+}
+
+/* -------------------------------------------------*/
+/* Form validation */
+/* -------------------------------------------------*/
+form ul.validation-errors {
+    margin-top: 1rem;
+    margin-bottom: 0;
+    list-style-type: square;
+    padding-left: 1rem;
+    list-style-position: inside;
+    color: #F04124;
+}
+
+form .form-control.invalid {
+    border-color: #F04124;
 }
 
 /* -------------------------------------------------*/

@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Markdig" Version="0.18.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\FS.LaterList.Common\FS.LaterList.Common.csproj" />
     <ProjectReference Include="..\FS.LaterList.IoC.Interfaces\FS.LaterList.IoC.Interfaces.csproj" />
   </ItemGroup>

@@ -32,6 +32,9 @@ namespace FS.LaterList.Repository.SQLite.Repositories
             where TEntity : class, IModel
             => GetInternal(select, where, orderBy, includes).FirstOrDefault();
 
+        public TEntity Add<TEntity>(TEntity entity) where TEntity : class, IModel
+            => AddRange(new[] { entity }.ToList()).First();
+
         public List<TEntity> AddRange<TEntity>(List<TEntity> entities) where TEntity : class, IModel
         {
             var now = DateTime.UtcNow;

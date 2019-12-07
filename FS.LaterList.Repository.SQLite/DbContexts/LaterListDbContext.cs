@@ -6,7 +6,7 @@ namespace FS.LaterList.Repository.SQLite.DbContexts
 {
     public class LaterListDbContext : DbContext
     {
-        public static readonly ILoggerFactory _loggerFactory =
+        private static readonly ILoggerFactory _loggerFactory =
             LoggerFactory
             .Create(builder => builder
                 .AddFilter((category, level) => category == DbLoggerCategory.Database.Command.Name && level == LogLevel.Information)

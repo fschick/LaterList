@@ -1,7 +1,42 @@
 ﻿@page "/"
 @inherits IndexController
 
-<h1 class="mb-3">Later Lists</h1>
+<div class="d-flex align-items-center mb-3">
+    <h1 class="flex-grow-1">Later Lists</h1>
+    <button type="button"
+            class="btn btn-primary"
+            data-toggle="collapse"
+            data-target="#createTodoList"
+            aria-expanded="false"
+            aria-controls="createTodoList"
+            @onclick="InitializeNewTodoList">
+        <i class="material-icons align-bottom">playlist_add</i> Create New
+    </button>
+</div>
+
+<div class="card collapse mb-3" id="createTodoList">
+    <div class="card-body">
+        <EditForm Model="@NewTodoList" OnValidSubmit="@(async() => await CreateTodoList(NewTodoList))">
+            <DataAnnotationsValidator />
+            <div class="form-group">
+                <label for="checkListTitle">Title</label>
+                <InputText type="text" class="form-control" id="checkListTitle" @bind-Value="@NewTodoList.Title" />
+            </div>
+            <div class="form-group form-check">
+                <InputCheckbox type="checkbox" class="form-check-input" id="checkListIsPublic" @bind-Value="@NewTodoList.IsPrivate" />
+                <label class="form-check-label" for="checkListIsPublic">Private list</label>
+                <small id="passwordHelpBlock" class="form-text text-danger" hidden="@(!NewTodoList.IsPrivate)">
+                    Keep in mind to save the link to the private list after it's created. Private lists aren't shown in the overview and can therefore only be accessed by their link.
+                </small>
+            </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+            <button type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#createTodoList">Cancel</button>
+            <div class="form-text help-block">
+                <ValidationSummary />
+            </div>
+        </EditForm>
+    </div>
+</div>
 
 <div class="list-group list-group-flush">
     @foreach (var todoList in TodoLists)

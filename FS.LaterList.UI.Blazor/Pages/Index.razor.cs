@@ -1,6 +1,7 @@
 ﻿using FS.LaterList.Common.Models;
 using FS.LaterList.Common.Routing;
 using FS.LaterList.UI.Blazor.Base;
+using FS.LaterList.UI.Blazor.Extensions;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +12,25 @@ namespace FS.LaterList.UI.Blazor.Pages
     public class IndexController : LaterListPage
     {
         protected IEnumerable<TodoList> TodoLists = Enumerable.Empty<TodoList>();
+        protected TodoList NewTodoList;
 
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-            TodoLists = await HttpClient.GetJsonAsync<IEnumerable<TodoList>>(Routes.LaterList.GetTodoLists);
+            InitializeNewTodoList();
+            await LoadData();
         }
+
+        protected async Task CreateTodoList(TodoList todoList)
+        {
+            todoList = await HttpClient.PostJsonAsync<TodoList>(Routes.LaterList.CreateTodoList, todoList);
+            NavigationManager.NavigateToPage<LaterList>(todoList.Id);
+        }
+
+        protected void InitializeNewTodoList()
+            => NewTodoList = new TodoList();
+
+        private async Task LoadData()
+            => TodoLists = await HttpClient.GetJsonAsync<IEnumerable<TodoList>>(Routes.LaterList.GetTodoLists);
     }
 }

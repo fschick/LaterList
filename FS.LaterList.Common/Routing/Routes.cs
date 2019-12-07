@@ -22,6 +22,9 @@ namespace FS.LaterList.Common.Routing
 
             public const string GetTodoLists = ROOT + nameof(GetTodoLists);
             public const string GetTodoList = ROOT + nameof(GetTodoList);
+            public const string CreateTodoList = ROOT + nameof(CreateTodoList);
+            public const string UpdateTodoList = ROOT + nameof(UpdateTodoList);
+            public const string CreateTodoItem = ROOT + nameof(CreateTodoItem);
             public const string UpdateTodoItem = ROOT + nameof(UpdateTodoItem);
             public const string GenerateDemoTodoLists = ROOT + nameof(GenerateDemoTodoLists);
         }
