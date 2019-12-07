@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../FS.LaterList/Build/Build.All.props" />
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FS.LaterList.Common\FS.LaterList.Common.csproj" />
+    <ProjectReference Include="..\FS.LaterList.IoC.Interfaces\FS.LaterList.IoC.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>
