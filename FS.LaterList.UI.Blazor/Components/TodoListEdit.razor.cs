@@ -2,6 +2,7 @@
 using FS.LaterList.Common.Models;
 using FS.LaterList.UI.Blazor.Base;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace FS.LaterList.UI.Blazor.Components
     public class TodoListEditController : LaterListComponent
     {
         protected TodoList InternalTodoList;
+
+        [Inject] private IJSRuntime JsRuntime { get; set; }
 
         [Parameter] public TodoList TodoList { get; set; }
 
@@ -33,7 +36,10 @@ namespace FS.LaterList.UI.Blazor.Components
         protected void ResetInternalTodoList()
             => InternalTodoList = TodoList.JsonClone();
 
-        protected Task Save()
-            => OnSave.InvokeAsync(InternalTodoList);
+        protected async Task Save()
+        {
+            await JsRuntime.InvokeAsync<object>("laterlist.collapse", $"#{CollapseCardId}", "hide");
+            await OnSave.InvokeAsync(InternalTodoList);
+        }
     }
 }
