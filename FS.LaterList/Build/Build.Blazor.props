@@ -1,8 +1,5 @@
 ﻿<Project>
   <PropertyGroup>
-    <DefineConstants>BLAZOR_CLIENT</DefineConstants>
-    <!--
-    <DefineConstants>BLAZOR_SERVER</DefineConstants>
-    -->
+    <DefineConstants>BLAZOR_CLIENT;BLAZOR_SERVER</DefineConstants>
   </PropertyGroup>
 </Project>

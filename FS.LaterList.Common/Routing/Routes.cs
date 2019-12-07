@@ -5,7 +5,8 @@ namespace FS.LaterList.Common.Routing
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public static class Routes
     {
-        public const string ROUTE_PREFIX = "api";
+        public const string BASE_URL = "/"; // Set to null to use relative path.
+        public const string ROUTE_PREFIX = BASE_URL + "api";
 
         public class WeatherForecast
         {
