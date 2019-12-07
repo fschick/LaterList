@@ -21,6 +21,7 @@ namespace FS.LaterList.Common.Routing
             private const string ROOT = ROUTE_PREFIX + "/" + nameof(LaterList) + "/";
 
             public const string GetTodoLists = ROOT + nameof(GetTodoLists);
+            public const string GetTodoList = ROOT + nameof(GetTodoList);
             public const string GenerateDemoTodoLists = ROOT + nameof(GenerateDemoTodoLists);
         }
     }

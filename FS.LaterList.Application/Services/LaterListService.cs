@@ -20,6 +20,14 @@ namespace FS.LaterList.Application.Services
                     where: x => !x.IsPrivate
                 );
 
+        public TodoList GetTodoList(Guid todoListId)
+            => _laterListRepository
+                .FirstOrDefault(
+                    select: (TodoList x) => x,
+                    where: x => x.Id == todoListId,
+                    includes: new[] { nameof(TodoList.Items) }
+                );
+
         public List<TodoList> GenerateDemoTodoLists(string namePrefix = "Demo ", int listCount = 3, int maxListItemsCount = 5)
         {
             var todoLists = new List<TodoList>();

@@ -22,21 +22,15 @@ namespace FS.LaterList.Repository.SQLite.Repositories
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string[] includes = null)
             where TEntity : class, IModel
-        {
-            var query = _dbContext.Set<TEntity>().AsQueryable();
+            => GetInternal(select, where, orderBy, includes).ToList();
 
-            if (where != null)
-                query = query.Where(where);
-
-            if (includes != null)
-                foreach (var include in includes)
-                    query = query.Include(include);
-
-            if (orderBy != null)
-                query = orderBy(query);
-
-            return query.Select(select).ToList();
-        }
+        public TResult FirstOrDefault<TEntity, TResult>(
+            Expression<Func<TEntity, TResult>> select,
+            Expression<Func<TEntity, bool>> where = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            string[] includes = null)
+            where TEntity : class, IModel
+            => GetInternal(select, where, orderBy, includes).FirstOrDefault();
 
         public List<TEntity> AddRange<TEntity>(List<TEntity> entities) where TEntity : class, IModel
         {
@@ -51,6 +45,23 @@ namespace FS.LaterList.Repository.SQLite.Repositories
             _dbContext.SaveChanges();
 
             return result;
+        }
+
+        private IQueryable<TResult> GetInternal<TEntity, TResult>(Expression<Func<TEntity, TResult>> select, Expression<Func<TEntity, bool>> where, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, string[] includes) where TEntity : class, IModel
+        {
+            var query = _dbContext.Set<TEntity>().AsQueryable();
+
+            if (where != null)
+                query = query.Where(where);
+
+            if (includes != null)
+                foreach (var include in includes)
+                    query = query.Include(include);
+
+            if (orderBy != null)
+                query = orderBy(query);
+
+            return query.Select(select);
         }
 
         private static void UpdateCreated<TEntity>(IEnumerable<TEntity> entities, DateTime? now = null) where TEntity : class, IModel

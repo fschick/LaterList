@@ -2,7 +2,9 @@
 using FS.LaterList.Common.Routing;
 using FS.LaterList.IoC.Interfaces.Application.Services;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace FS.LaterList.Api.REST.Controllers
 {
@@ -17,6 +19,10 @@ namespace FS.LaterList.Api.REST.Controllers
         [HttpGet(Routes.LaterList.GetTodoLists)]
         public IEnumerable<TodoList> GetTodoLists()
             => _laterListService.GetTodoLists();
+
+        [HttpGet(Routes.LaterList.GetTodoList + "/{todoListId:guid}")]
+        public TodoList GetList([Required, FromRoute]Guid todoListId)
+            => _laterListService.GetTodoList(todoListId);
 
         [HttpPost(Routes.LaterList.GenerateDemoTodoLists)]
         public List<TodoList> GenerateDemoTodoLists(string namePrefix = "Demo ", int listCount = 3, int maxListItemsCount = 5)

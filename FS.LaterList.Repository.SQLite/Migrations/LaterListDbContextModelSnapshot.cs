@@ -4,7 +4,6 @@ using System;
 using FS.LaterList.Repository.SQLite.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FS.LaterList.Repository.SQLite.Migrations
 {

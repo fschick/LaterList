@@ -6,6 +6,6 @@
 <div class="list-group list-group-flush">
     @foreach (var todoList in TodoLists)
     {
-        <a href="@($"list/{todoList.Id}")" class="list-group-item list-group-item-action pl-0">@todoList.Title</a>
+        <a href="@(NavigationManager.GetPageLink<LaterList>(todoList.Id))" class="list-group-item list-group-item-action pl-0">@todoList.Title</a>
     }
 </div>

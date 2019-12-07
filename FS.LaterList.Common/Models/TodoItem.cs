@@ -14,6 +14,8 @@ namespace FS.LaterList.Common.Models
 
         public TodoItemStatus Status { get; set; } = TodoItemStatus.Open;
 
+        public bool IsDone => Status == TodoItemStatus.Done;
+
         public DateTime Created { get; set; }
 
         public DateTime Modified { get; set; }
