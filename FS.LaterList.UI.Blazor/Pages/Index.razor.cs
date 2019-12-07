@@ -21,14 +21,14 @@ namespace FS.LaterList.UI.Blazor.Pages
             await LoadData();
         }
 
+        protected void InitializeNewTodoList()
+            => NewTodoList = new TodoList();
+
         protected async Task CreateTodoList(TodoList todoList)
         {
             todoList = await HttpClient.PostJsonAsync<TodoList>(Routes.LaterList.CreateTodoList, todoList);
             NavigationManager.NavigateToPage<LaterList>(todoList.Id);
         }
-
-        protected void InitializeNewTodoList()
-            => NewTodoList = new TodoList();
 
         private async Task LoadData()
             => TodoLists = await HttpClient.GetJsonAsync<IEnumerable<TodoList>>(Routes.LaterList.GetTodoLists);

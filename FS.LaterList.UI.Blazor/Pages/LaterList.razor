@@ -2,7 +2,10 @@
 @page "/laterlist/{TodoListId:guid}"
 @inherits LaterListController
 
-<h1 class="mb-3">@TodoList.Title</h1>
+<h1 class="mb-3 d-inline-block">@TodoList.Title</h1>
+<i class="material-icons pointer" data-toggle="collapse" data-target="#updateTodoList" aria-expanded="false" aria-controls="updateTodoList">edit</i>
+
+<TodoListEdit id="updateTodoList" TodoList="TodoList" OnSave="UpdateTodoList" />
 
 <ul class="list-group list-group-flush">
     @foreach (var todoItem in TodoList.Items)

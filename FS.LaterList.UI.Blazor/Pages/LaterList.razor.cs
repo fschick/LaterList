@@ -19,5 +19,8 @@ namespace FS.LaterList.UI.Blazor.Pages
             TodoList = await HttpClient.GetJsonAsync<TodoList>($"{Routes.LaterList.GetTodoList}/{TodoListId}");
             StateHasChanged();
         }
+
+        protected async Task UpdateTodoList(TodoList todoList)
+            => TodoList = await HttpClient.PutJsonAsync<TodoList>(Routes.LaterList.UpdateTodoList, todoList);
     }
 }
