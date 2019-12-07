@@ -1,5 +1,11 @@
 ﻿@page "/"
+@inherits IndexController
 
-<h1>Hello, world!</h1>
+<h1 class="mb-3">Later Lists</h1>
 
-Welcome to your new app.
+<div class="list-group list-group-flush">
+    @foreach (var todoList in TodoLists)
+    {
+        <a href="@($"list/{todoList.Id}")" class="list-group-item list-group-item-action pl-0">@todoList.Title</a>
+    }
+</div>
