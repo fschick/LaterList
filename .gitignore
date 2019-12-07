@@ -295,3 +295,5 @@ __pycache__/
 *.xsd.cs
 
 # User added stuff
+/FS.LaterList/*.sqlite
+/FS.LaterList/wwwroot/legal

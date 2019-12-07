@@ -11,7 +11,7 @@ namespace FS.LaterList.Api.REST.Swagger
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "LaterList API", Version = "v1" });
             });
         }
 
@@ -27,7 +27,7 @@ namespace FS.LaterList.Api.REST.Swagger
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "LaterList API V1");
             });
         }
     }

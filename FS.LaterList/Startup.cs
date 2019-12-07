@@ -1,13 +1,16 @@
 using System;
+using System.IO;
 using System.Net.Http;
+using System.Reflection;
+using System.Threading.Tasks;
 using FS.LaterList.Api.REST.Controllers;
 using FS.LaterList.Api.REST.Swagger;
 using FS.LaterList.IoC.DI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 
 #if BLAZOR_CLIENT
@@ -39,7 +42,7 @@ namespace FS.LaterList
 
             services
                 .AddControllers()
-                .AddApplicationPart(typeof(WeatherForecastController).Assembly);
+                .AddApplicationPart(typeof(LaterListController).Assembly);
 
             services.RegisterSwaggerGenerator();
             services.RegisterAppServices();
@@ -48,38 +51,41 @@ namespace FS.LaterList
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            DatabaseMigration.MigrateToLatest(app);
+
 #if BLAZOR_SERVER
-            app.Map("/server", appBuilder => Configure(appBuilder, env, false));
+            app.Map("/blazorserver", appBuilder => ConfigureBlazor(appBuilder, env, false));
 #endif
 #if BLAZOR_CLIENT
-            app.Map("/client", appBuilder => Configure(appBuilder, env, true));
+            app.Map("/blazorclient", appBuilder => ConfigureBlazor(appBuilder, env, true));
 #endif
 
             app.RegisterSwaggerMiddleware();
             app.RegisterSwaggerUI();
 
+            if (env.IsDevelopment())
+                app.UseDeveloperExceptionPage();
+            else
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+
+            UseLaterListStaticFiles(app, env);
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapBlazorHub();
+                endpoints.MapGet("/index.html", r =>
+                {
+                    r.Response.Redirect("/");
+                    return Task.CompletedTask;
+                });
+                endpoints.MapFallbackToPage("/Project");
                 endpoints.MapControllers();
-            });
-
-            app.Run(async (context) =>
-            {
-                await context.Response.WriteAsync(@"
-                    <!DOCTYPE html>
-                    <body style=""text-align: center; padding-top: 5rem;"">
-                        <a href=""swagger/"" style=""display: block; color: rgb(64,64,64); font-family: sans-serif; margin-bottom: 0.5rem;"">Swagger UI</a>
-                        <a href=""client/"" style=""display: block; color: rgb(64,64,64); font-family: sans-serif; margin-bottom: 0.5rem;"">Client side rendered Blazor</a>
-                        <a href=""server/"" style=""display: block; color: rgb(64,64,64); font-family: sans-serif; margin-bottom: 0.5rem;"">Server side rendered Blazor</a>
-                    </body>
-                    </html>
-                ");
             });
         }
 
-        private void Configure(IApplicationBuilder app, IWebHostEnvironment env, bool clientSideBlazor)
+        private static void ConfigureBlazor(IApplicationBuilder app, IWebHostEnvironment env, bool clientSideBlazor)
         {
             if (clientSideBlazor)
                 app.UseResponseCompression();
@@ -107,9 +113,26 @@ namespace FS.LaterList
                 else
                 {
                     endpoints.MapBlazorHub();
-                    endpoints.MapFallbackToPage("/_Host");
+                    endpoints.MapFallbackToPage("/Index");
                 }
             });
+        }
+
+        private static void UseLaterListStaticFiles(IApplicationBuilder app, IHostEnvironment env)
+        {
+            var distWebRootPath = Path.Combine(env.ContentRootPath, Assembly.GetExecutingAssembly().GetName().Name, "dist");
+            var debugWebRootPath = Path.Combine(env.ContentRootPath, "wwwroot");
+
+            IFileProvider fileProvider;
+            if (Directory.Exists(distWebRootPath))
+                fileProvider = new PhysicalFileProvider(distWebRootPath);
+            else if (Directory.Exists(debugWebRootPath))
+                fileProvider = new PhysicalFileProvider(debugWebRootPath);
+            else
+                fileProvider = new NullFileProvider();
+
+            var staticFileOptions = new StaticFileOptions { FileProvider = fileProvider };
+            app.UseStaticFiles(staticFileOptions);
         }
     }
 }

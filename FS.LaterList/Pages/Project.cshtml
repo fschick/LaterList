@@ -1,0 +1,39 @@
+﻿@page "/Project"
+@model FS.LaterList.Pages.OverviewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LaterList</title>
+    <base href="~/" />
+    <link href="~/css/bootstrap.yeti/bootstrap.yeti.min.css" rel="stylesheet" />
+    <link href="~/css/fs.laterlist.css" rel="stylesheet" />
+</head>
+<body>
+    <header class="container-fluid fixed-top px-0">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+            <a class="navbar-brand" href="#">
+                <i class="material-icons align-bottom" style="font-size: 1.9rem;">
+                    playlist_add_check
+                </i>
+                LaterList
+            </a>
+        </nav>
+    </header>
+    <main role="main" class="container pb-2" style="padding-top: 5rem;">
+        @Html.Raw(Model.ReadmeMarkup)
+    </main>
+    <footer class="footer d-flex flex-column bg-white">
+        <hr class="m-0" />
+        <div class="row mx-0 h-100 align-items-center">
+            <div class="col p-0 text-center">
+                <small class="text-muted">
+                    @Model.ProductName, Version @Model.ProductVersion
+                </small>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

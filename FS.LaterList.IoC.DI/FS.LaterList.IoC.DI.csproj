@@ -7,10 +7,14 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\FS.LaterList.Common\FS.LaterList.Common.csproj" />
+    <ProjectReference Include="..\FS.LaterList.Repository.SQLite\FS.LaterList.Repository.SQLite.csproj" />
     <ProjectReference Include="..\FS.LaterList.Application\FS.LaterList.Application.csproj" />
   </ItemGroup>
 

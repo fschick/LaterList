@@ -6,7 +6,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Markdig" Version="0.18.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\README.md" Link="wwwroot\README.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Server" Version="3.1.0-preview4.19579.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,6 +35,19 @@
   <Target Name="RemoveClientSideBlazorFiles" AfterTargets="AfterPublish" Condition="!$(DefineConstants.Contains('BLAZOR_CLIENT'))">
     <RemoveDir Directories="$(PublishDir)FS.LaterList.UI.Blazor\dist\_framework" />
     <Delete Files="$(PublishDir)FS.LaterList.UI.Blazor\dist\index.html" />
+  </Target>
+
+  <PropertyGroup>
+    <LaterListPublishDistDir>$(AssemblyName)\dist\</LaterListPublishDistDir>
+  </PropertyGroup>
+
+  <Target Name="LaterListGetCopyToPublishDirectoryItems" BeforeTargets="GetCopyToPublishDirectoryItems" Condition="'$(OutputType.ToLowerInvariant())'=='exe'">
+    <ItemGroup>
+      <!-- Move wwwroot files to output root -->
+      <ContentWithTargetPath Update="@(ContentWithTargetPath)" Condition="$([System.String]::new(%(TargetPath)).StartsWith('wwwroot\')) OR $([System.String]::new(%(TargetPath)).StartsWith('wwwroot/'))">
+        <TargetPath>$(LaterListPublishDistDir)$([System.String]::new(%(TargetPath)).Substring(8))</TargetPath>
+      </ContentWithTargetPath>
+    </ItemGroup>
   </Target>
 
 </Project>

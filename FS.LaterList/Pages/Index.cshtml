@@ -1,0 +1,22 @@
+﻿@page "/Index"
+@namespace FS.LaterList.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LaterList</title>
+    <base href="~/" />
+    <link href="~/css/bootstrap.yeti/bootstrap.yeti.min.css" rel="stylesheet" />
+    <link href="~/css/fs.laterlist.ui.blazor.css" rel="stylesheet" />
+</head>
+<body>
+    <app>
+        <component type="typeof(UI.Blazor.App)" render-mode="ServerPrerendered" />
+    </app>
+
+    <script src="_framework/blazor.server.js"></script>
+</body>
+</html>
