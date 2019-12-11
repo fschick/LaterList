@@ -297,3 +297,4 @@ __pycache__/
 # User added stuff
 /FS.LaterList/*.sqlite
 /FS.LaterList/wwwroot/legal
+/FS.LaterList/appsettings.development.json
