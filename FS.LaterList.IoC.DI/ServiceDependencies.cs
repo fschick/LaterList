@@ -1,5 +1,5 @@
 ﻿using FS.LaterList.Application.Services;
-using FS.LaterList.IoC.Interfaces.App.Service;
+using FS.LaterList.IoC.Interfaces.Application.Service;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FS.LaterList.IoC.DI

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using FS.LaterList.Common.Models;
+using System;
 using System.Threading.Tasks;
-using FS.LaterList.Common.Models;
 
-namespace FS.LaterList.IoC.Interfaces.App.Service
+namespace FS.LaterList.IoC.Interfaces.Application.Service
 {
     public interface IWeatherForecastService
     {
