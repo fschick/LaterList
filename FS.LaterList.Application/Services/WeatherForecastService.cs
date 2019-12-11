@@ -1,8 +1,8 @@
 using FS.LaterList.Common.Models;
+using FS.LaterList.IoC.Interfaces.Application.Service;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using FS.LaterList.IoC.Interfaces.App.Service;
 
 namespace FS.LaterList.Application.Services
 {
