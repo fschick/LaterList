@@ -22,3 +22,4 @@ Original Blazor client/server templates merged to be switchable by
 Individual steps through my talk about Blazor
 
 * [talk/01* - talk/0n*](https://github.com/fschick/LaterList/tree/talk/01_emtpy_project)
+* [Slides](https://github.com/fschick/LaterList/blob/master/FS.Talk.Blazor/Talk_Blazor.pdf)
