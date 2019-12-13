@@ -3,6 +3,8 @@ using FS.LaterList.IoC.Interfaces.Application.Services;
 using Markdig;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace FS.LaterList.Pages
 {
@@ -24,17 +26,22 @@ namespace FS.LaterList.Pages
             _informationService = informationService;
         }
 
-        public void OnGet()
+        public async Task OnGet()
         {
             var readmePath = System.IO.Path.Combine(_webHostEnvironment.GetWebRootPath(), README_FILE);
             if (!System.IO.File.Exists(readmePath))
                 readmePath = System.IO.Path.Combine(_webHostEnvironment.ContentRootPath, "..", README_FILE);
 
-            var pipeline = new MarkdownPipelineBuilder().UseSoftlineBreakAsHardlineBreak().Build();
-            ReadmeMarkup = Markdown
-                .ToHtml(System.IO.File.ReadAllText(readmePath), pipeline)
-                .Replace("https://laterlist.de", $"{Request.Scheme}://{Request.Host}")
-                .Replace("<a href=", "<a target=\"_blank\" href=");
+            using (var httpClient = new HttpClient())
+            {
+                //var readMeMarkdown = System.IO.File.ReadAllText(readmePath);
+                var readMeMarkdown = await httpClient.GetStringAsync("https://raw.githubusercontent.com/fschick/LaterList/master/README.md");
+                var pipeline = new MarkdownPipelineBuilder().UseSoftlineBreakAsHardlineBreak().Build();
+                ReadmeMarkup = Markdown
+                    .ToHtml(readMeMarkdown, pipeline)
+                    .Replace("https://laterlist.de", $"{Request.Scheme}://{Request.Host}")
+                    .Replace("<a href=", "<a target=\"_blank\" href=");
+            }
 
             ProductName = _informationService.GetProductName();
             ProductVersion = _informationService.GetProductVersion();
