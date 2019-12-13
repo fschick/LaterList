@@ -38,7 +38,7 @@ namespace FS.LaterList.UI.Blazor.Components
 
         protected async Task Save()
         {
-            await JsRuntime.InvokeAsync<object>("laterlist.collapse", $"#{CollapseCardId}", "hide");
+            await JsRuntime.InvokeVoidAsync("laterlist.collapse", $"#{CollapseCardId}", "hide");
             await OnSave.InvokeAsync(InternalTodoList);
         }
     }
