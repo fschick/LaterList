@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Hosting;
 
 namespace FS.LaterList.Pages
 {
@@ -7,7 +8,7 @@ namespace FS.LaterList.Pages
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public bool IsDevelopment => false;//_webHostEnvironment.IsDevelopment();
+        public bool IsDevelopment => _webHostEnvironment.IsDevelopment();
 
         public IndexController(IWebHostEnvironment webHostEnvironment)
             => _webHostEnvironment = webHostEnvironment;
