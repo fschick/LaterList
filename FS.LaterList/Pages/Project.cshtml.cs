@@ -1,14 +1,14 @@
-﻿using FS.LaterList.Common.Extensions;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
+using FS.LaterList.Common.Extensions;
 using FS.LaterList.IoC.Interfaces.Application.Services;
 using Markdig;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace FS.LaterList.Pages
 {
-    public class OverviewModel : PageModel
+    public class OverviewController : PageModel
     {
         private const string README_FILE = "README.md";
 
@@ -20,7 +20,7 @@ namespace FS.LaterList.Pages
         public string ProductVersion = string.Empty;
         public string Copyright = string.Empty;
 
-        public OverviewModel(IWebHostEnvironment webHostEnvironment, IInformationService informationService)
+        public OverviewController(IWebHostEnvironment webHostEnvironment, IInformationService informationService)
         {
             _webHostEnvironment = webHostEnvironment;
             _informationService = informationService;
