@@ -2,30 +2,49 @@
 @page "/laterlist/{TodoListId:guid}"
 @inherits LaterListController
 
-<div class="d-flex align-items-center mb-3">
-    <div class="flex-grow-1">
+<div class="row align-items-center">
+    <div class="col-md">
         <h1 class="d-inline">@TodoList.Title</h1>
-        <i class="material-icons pointer text-secondary" data-toggle="collapse" data-target="#updateTodoList" aria-expanded="false" aria-controls="updateTodoList">edit</i>
-        <i class="material-icons pointer text-secondary" @onclick="@RemoveTodoList">delete</i>
+        <i class="material-icons pointer text-muted" data-toggle="collapse" data-target="#updateTodoList" aria-expanded="false" aria-controls="updateTodoList">edit</i>
+        <i class="material-icons pointer text-muted" @onclick="@RemoveTodoList">delete</i>
     </div>
-    <button type="button"
-            class="btn btn-primary"
-            data-toggle="collapse"
-            data-target="#createTodoList"
-            aria-expanded="false"
-            aria-controls="createTodoList"
-            @onclick="CreateTodoItem">
-        <i class="material-icons align-bottom">playlist_add</i> Create Todo
-    </button>
+    <div class="col-md-auto pt-3 pt-md-0 text-right">
+        <button type="button"
+                class="btn btn-primary"
+                data-toggle="collapse"
+                data-target="#createTodoList"
+                aria-expanded="false"
+                aria-controls="createTodoList"
+                @onclick="CreateTodoItem">
+            <i class="material-icons align-bottom">playlist_add</i>Add&nbsp;Todo
+        </button>
+    </div>
 </div>
 
 <TodoListEdit id="updateTodoList" TodoList="TodoList" OnSave="UpdateTodoList" />
 
-<ul class="list-group list-group-flush">
+<ul class="list-group list-group-flush mt-1">
     @foreach (var todoItem in TodoList.Items)
     {
-        <li class="list-group-item pl-0">
+        <li class="list-group-item px-0 py-1">
             <TodoItemRow TodoItem="@todoItem" OnSave="UpdateTodoItem" OnRemove="DeleteTodoItem" />
         </li>
     }
 </ul>
+
+@if (TodoList.Items.Count > 3)
+{
+    <div class="row">
+        <div class="col pt-3 text-right">
+            <button type="button"
+                    class="btn btn-primary"
+                    data-toggle="collapse"
+                    data-target="#createTodoList"
+                    aria-expanded="false"
+                    aria-controls="createTodoList"
+                    @onclick="CreateTodoItem">
+                <i class="material-icons align-bottom">playlist_add</i>Add&nbsp;Todo
+            </button>
+        </div>
+    </div>
+}
