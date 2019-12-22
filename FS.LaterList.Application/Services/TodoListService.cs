@@ -19,7 +19,8 @@ namespace FS.LaterList.Application.Services
             => _laterListRepository
                 .Get(
                     select: (TodoList x) => x,
-                    where: x => !x.IsPrivate
+                    where: x => !x.IsPrivate,
+                    orderBy: o => o.OrderBy(x => x.Title)
                 );
 
         public TodoList GetTodoList(Guid todoListId)
