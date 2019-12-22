@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using FS.LaterList.Common.Comparer;
 using FS.LaterList.Common.Models;
 using FS.LaterList.IoC.Interfaces.Application.Services;
 using FS.LaterList.IoC.Interfaces.Repository.SQLite.Repositories;
@@ -21,12 +23,18 @@ namespace FS.LaterList.Application.Services
                 );
 
         public TodoList GetTodoList(Guid todoListId)
-            => _laterListRepository
-                .FirstOrDefault(
-                    select: (TodoList x) => x,
-                    where: x => x.Id == todoListId,
-                    includes: new[] { nameof(TodoList.Items) }
-                );
+        {
+            var result = _laterListRepository
+                           .FirstOrDefault(
+                               select: (TodoList x) => x,
+                               where: x => x.Id == todoListId,
+                               includes: new[] { nameof(TodoList.Items) }
+                           );
+
+            result.Items = result.Items.OrderBy(x => x, TodoItemComparer.Default).ToList();
+
+            return result;
+        }
 
         public TodoList CreateTodoList(TodoList todoList)
         {

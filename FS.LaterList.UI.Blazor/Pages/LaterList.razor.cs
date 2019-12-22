@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
+using FS.LaterList.Common.Comparer;
 using FS.LaterList.Common.Models;
 using FS.LaterList.Common.Routing;
 using FS.LaterList.UI.Blazor.Base;
@@ -24,13 +26,19 @@ namespace FS.LaterList.UI.Blazor.Pages
         protected async Task UpdateTodoList(TodoList todoList)
             => TodoList = await HttpClient.PutJsonAsync<TodoList>(Routes.TodoList.UpdateTodoList, todoList);
 
-        protected Task UpdateTodoItem(TodoItem todoItem)
-            => HttpClient.PutJsonAsync<TodoItem>(Routes.TodoItem.UpdateTodoItem, todoItem);
+        protected async Task UpdateTodoItem(TodoItem todoItem)
+        {
+            TodoList.Items.Remove(todoItem);
+            var result = await HttpClient.PutJsonAsync<TodoItem>(Routes.TodoItem.UpdateTodoItem, todoItem);
+            TodoList.Items.Add(result);
+            TodoList.Items = TodoList.Items.OrderBy(x => x, TodoItemComparer.Default).ToList();
+        }
 
         protected async Task DeleteTodoItem(TodoItem todoItem)
         {
             await HttpClient.DeleteAsync($"{Routes.TodoItem.RemoveTodoItem}/{todoItem.Id}");
             TodoList.Items.Remove(todoItem);
+            TodoList.Items = TodoList.Items.OrderBy(x => x, TodoItemComparer.Default).ToList();
         }
 
         protected async Task RemoveTodoList()
@@ -44,6 +52,7 @@ namespace FS.LaterList.UI.Blazor.Pages
             var todoItem = new TodoItem { Title = "New Todo" };
             todoItem = await HttpClient.PostJsonAsync<TodoItem>($"{Routes.TodoItem.CreateTodoItem}/{TodoListId}", todoItem);
             TodoList.Items.Add(todoItem);
+            TodoList.Items = TodoList.Items.OrderBy(x => x, TodoItemComparer.Default).ToList();
         }
     }
 }
