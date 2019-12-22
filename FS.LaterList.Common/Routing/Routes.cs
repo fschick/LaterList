@@ -19,19 +19,25 @@ namespace FS.LaterList.Common.Routing
             public const string GetPrivacyPolicy = ROOT + nameof(GetPrivacyPolicy);
         }
 
-        public class LaterList
+        public class TodoList
         {
-            private const string ROOT = ROUTE_PREFIX + "/" + nameof(LaterList) + "/";
+            private const string ROOT = ROUTE_PREFIX + "/" + nameof(TodoList) + "/";
 
             public const string GetTodoLists = ROOT + nameof(GetTodoLists);
             public const string GetTodoList = ROOT + nameof(GetTodoList);
             public const string CreateTodoList = ROOT + nameof(CreateTodoList);
             public const string UpdateTodoList = ROOT + nameof(UpdateTodoList);
             public const string RemoveTodoList = ROOT + nameof(RemoveTodoList);
+            public const string GenerateDemoTodoLists = ROOT + nameof(GenerateDemoTodoLists);
+        }
+
+        public class TodoItem
+        {
+            private const string ROOT = ROUTE_PREFIX + "/" + nameof(TodoItem) + "/";
+
             public const string CreateTodoItem = ROOT + nameof(CreateTodoItem);
             public const string UpdateTodoItem = ROOT + nameof(UpdateTodoItem);
             public const string RemoveTodoItem = ROOT + nameof(RemoveTodoItem);
-            public const string GenerateDemoTodoLists = ROOT + nameof(GenerateDemoTodoLists);
         }
     }
 }

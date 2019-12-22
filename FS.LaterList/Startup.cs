@@ -41,7 +41,7 @@ namespace FS.LaterList
 
             services
                 .AddControllers()
-                .AddApplicationPart(typeof(LaterListController).Assembly);
+                .AddApplicationPart(typeof(TodoListController).Assembly);
 
             services.RegisterSwaggerGenerator();
             services.RegisterAppServices();
