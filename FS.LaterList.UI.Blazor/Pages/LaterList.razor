@@ -27,7 +27,7 @@
     @foreach (var todoItem in TodoList.Items)
     {
         <li class="list-group-item px-0 py-1">
-            <TodoItemRow TodoItem="@todoItem" OnSave="UpdateTodoItem" OnRemove="DeleteTodoItem" />
+            <TodoItemRow @key="todoItem.Id" TodoItem="@todoItem" OnSave="UpdateTodoItem" OnRemove="DeleteTodoItem" />
         </li>
     }
 </ul>
