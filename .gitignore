@@ -298,3 +298,4 @@ __pycache__/
 /FS.LaterList/*.sqlite
 /FS.LaterList/wwwroot/legal/
 /FS.LaterList/appsettings.development.json
+/FS.LaterList/NLog.xsd
