@@ -68,7 +68,9 @@ namespace FS.LaterList
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
 
-            app.UseHttpsRedirection();
+            if (!env.IsDevelopment())
+                app.UseHttpsRedirection();
+
             UseLaterListStaticFiles(app, env);
             app.UseRouting();
 
@@ -102,7 +104,9 @@ namespace FS.LaterList
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            if (!env.IsDevelopment())
+                app.UseHttpsRedirection();
+
             app.UseStaticFiles();
             app.UseClientSideBlazorFiles<UI.Blazor.Startup>();
             app.UseRouting();
