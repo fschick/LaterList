@@ -1,32 +1,41 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using FS.LaterList.Common.Comparer;
 using FS.LaterList.Common.Models;
 using FS.LaterList.IoC.Interfaces.Application.Services;
 using FS.LaterList.IoC.Interfaces.Repository.SQLite.Repositories;
-using System;
-using System.Collections.Generic;
 
 namespace FS.LaterList.Application.Services
 {
-    public class LaterListService : ILaterListService
+    public class TodoListService : ITodoListService
     {
         private readonly ILaterListRepository _laterListRepository;
 
-        public LaterListService(ILaterListRepository laterListRepository)
+        public TodoListService(ILaterListRepository laterListRepository)
             => _laterListRepository = laterListRepository;
 
         public IEnumerable<TodoList> GetTodoLists()
             => _laterListRepository
                 .Get(
                     select: (TodoList x) => x,
-                    where: x => !x.IsPrivate
+                    where: x => !x.IsPrivate,
+                    orderBy: o => o.OrderBy(x => x.Title)
                 );
 
         public TodoList GetTodoList(Guid todoListId)
-            => _laterListRepository
-                .FirstOrDefault(
-                    select: (TodoList x) => x,
-                    where: x => x.Id == todoListId,
-                    includes: new[] { nameof(TodoList.Items) }
-                );
+        {
+            var result = _laterListRepository
+                           .FirstOrDefault(
+                               select: (TodoList x) => x,
+                               where: x => x.Id == todoListId,
+                               includes: new[] { nameof(TodoList.Items) }
+                           );
+
+            result.Items = result.Items.OrderBy(x => x, TodoItemComparer.Default).ToList();
+
+            return result;
+        }
 
         public TodoList CreateTodoList(TodoList todoList)
         {
@@ -54,58 +63,6 @@ namespace FS.LaterList.Application.Services
         public void RemoveTodoList(Guid todoListId)
         {
             var origin = GetTodoList(todoListId);
-            _laterListRepository.Remove(origin);
-        }
-
-        public TodoItem CreateTodoItem(Guid todoListId, TodoItem todoItem)
-        {
-            var originTodoList = _laterListRepository.FirstOrDefault(
-                select: (TodoList x) => x,
-                where: x => x.Id == todoListId
-            );
-
-            if (originTodoList == null)
-                throw new KeyNotFoundException($"Could not find a TodoList with id {todoListId}.");
-
-            var dbTodoItem = new TodoItem
-            {
-                Title = todoItem.Title,
-                Status = todoItem.Status,
-                Priority = todoItem.Priority,
-                DueDate = todoItem.DueDate
-            };
-
-            originTodoList.Items.Add(dbTodoItem);
-            _laterListRepository.Update(originTodoList);
-            return dbTodoItem;
-        }
-
-        public TodoItem UpdateTodoItem(TodoItem todoItem)
-        {
-            var origin = _laterListRepository.FirstOrDefault(
-                select: (TodoItem x) => x,
-                where: x => x.Id == todoItem.Id
-                );
-
-            if (origin == null)
-                throw new KeyNotFoundException($"Could not find a TodoList item with id {todoItem.Id}.");
-
-            origin.Title = todoItem.Title;
-            origin.Status = todoItem.Status;
-            origin.Priority = todoItem.Priority;
-            origin.DueDate = todoItem.DueDate;
-
-            return _laterListRepository.Update(origin);
-        }
-
-        public void RemoveTodoItem(Guid todoItemId)
-        {
-            var origin = _laterListRepository
-                .FirstOrDefault(
-                    select: (TodoItem x) => x,
-                    where: x => x.Id == todoItemId
-                );
-
             _laterListRepository.Remove(origin);
         }
 

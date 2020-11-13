@@ -1,6 +1,7 @@
 ﻿using FS.LaterList.Common.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
 
 namespace FS.LaterList.Repository.SQLite.DbContexts
 {
@@ -10,7 +11,7 @@ namespace FS.LaterList.Repository.SQLite.DbContexts
             LoggerFactory
             .Create(builder => builder
                 .AddFilter((category, level) => category == DbLoggerCategory.Database.Command.Name && level == LogLevel.Information)
-                .AddConsole()
+                .AddNLog()
             );
 
         public DbSet<TodoList> TodoLists { get; set; }

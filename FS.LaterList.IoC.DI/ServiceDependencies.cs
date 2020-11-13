@@ -14,6 +14,7 @@ namespace FS.LaterList.IoC.DI
                 .AddDbContext<LaterListDbContext>()
                 .AddScoped<ILaterListRepository, LaterListRepository>()
                 .AddScoped<IInformationService, InformationService>()
-                .AddScoped<ILaterListService, LaterListService>();
+                .AddScoped<ITodoListService, TodoListService>()
+                .AddScoped<ITodoItemService, TodoItemService>();
     }
 }
