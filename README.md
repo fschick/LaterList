@@ -2,16 +2,6 @@
 
 A simple to-do list to demonstrate how to setup a Blazor project with client as well as server side rendering at the same time
 
-# Demo
-
-Blazor, client-side rendering<br />[https://laterlist.de/blazorclient](https://laterlist.de/blazorclient)
-
-Blazor, server-side rendering<br />[https://laterlist.de/blazorserver](https://laterlist.de/blazorserver)
-
-# Source Code
-
-The source code is available on [GitHub (https://github.com/fschick/LaterList)](https://github.com/fschick/LaterList)
-
 # Branches
 
 Original Blazor client/server templates merged to be switchable by
